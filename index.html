@@ -12,28 +12,19 @@
   <link rel="stylesheet" href="./estilos/style.css">
 </head>
 <body>
-<!-- NAVBAR -->
+
+    <!-- NAVBAR (responsive: desktop / tablet / móvil) -->
 <nav class="navbar navbar-dark bg-dark px-3 py-3">
   <div class="container">
     <div class="row w-100 align-items-center gx-2">
-      <div class="col-auto">
+
+      <!-- Marca -->
+      <div class="col-4 col-md-auto order-1 order-md-1">
         <a class="navbar-brand text-white" href="index.html">Mi Tienda</a>
       </div>
 
-      <!-- Buscador central -->
-      <div class="col">
-        <div class="position-relative">
-          <div class="input-group">
-            <input id="search-input" type="search" class="form-control form-control-sm" placeholder="Buscar productos, marcas, modelos..." aria-label="Buscar productos" autocomplete="off">
-            <button id="search-clear" class="btn btn-outline-light btn-sm" type="button" title="Limpiar búsqueda">✕</button>
-          </div>
-
-          <!-- Contenedor de resultados en vivo -->
-          <div id="search-results" class="search-results shadow-sm" role="listbox" aria-label="Resultados de búsqueda" hidden></div>
-        </div>
-      </div>
-
-      <div class="col-auto">
+      <!-- Controles (moneda + carrito) -->
+      <div class="col-8 col-md-auto order-2 order-md-3">
         <div class="d-flex align-items-center gap-3">
           <select id="select-moneda" class="form-select form-select-sm">
             <option value="USD">USD</option>
@@ -46,6 +37,20 @@
           </button>
         </div>
       </div>
+
+      <!-- Buscador: ocupa toda la fila en pantallas pequeñas, en desktop queda en el centro -->
+      <div class="col-12 col-md order-3 order-md-2 mt-2 mt-md-0">
+        <div class="position-relative">
+          <div class="input-group">
+            <input id="search-input" type="search" class="form-control form-control-sm" placeholder="Buscar productos, marcas, modelos..." aria-label="Buscar productos" autocomplete="off">
+            <button id="search-clear" class="btn btn-outline-light btn-sm" type="button" title="Limpiar búsqueda">✕</button>
+          </div>
+
+          <!-- Contenedor de resultados en vivo -->
+          <div id="search-results" class="search-results shadow-sm" role="listbox" aria-label="Resultados de búsqueda" hidden></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </nav>
