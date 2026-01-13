@@ -263,3 +263,50 @@
   text-align: center;
   font-size: 14px;
 }
+
+/* Asegura que el dropdown de búsqueda se ajuste al ancho del input en móviles */
+.search-results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 8px;
+  max-height: 420px;
+  overflow-y: auto;
+  z-index: 2000;
+  padding: 8px;
+}
+
+/* En pantallas grandes limitar el ancho del dropdown al ancho del input central */
+@media (min-width: 768px) {
+  /* Si el input está centrado, el contenedor ya ocupa el ancho de la columna.
+     Si quieres limitar el ancho máximo en desktop, descomenta y ajusta: */
+  /* .search-results { max-width: 720px; margin: 0 auto; left: auto; right: auto; } */
+}
+
+/* Espaciado extra para el input en móviles */
+@media (max-width: 767.98px) {
+  .navbar .input-group { width: 100%; }
+}
+
+
+
+/* Footer styles */
+footer { font-size: 14px; }
+footer .badge-offer { background: rgba(255,153,0,0.12); color: #ffffff; }
+footer a { transition: color .12s ease; }
+footer a:hover { color: #fff; text-decoration: none; }
+
+/* Payment icons fallback spacing */
+footer img[alt] { margin-left: 6px; }
+
+/* Back to top button */
+#back-to-top { z-index: 1050; border-radius: 50%; width:44px; height:44px; display:flex; align-items:center; justify-content:center; box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+#back-to-top i { font-size: 1.05rem; }
+
+/* Responsive tweaks */
+@media (max-width: 575.98px) {
+  footer .container { padding-left: 16px; padding-right: 16px; }
+  footer .product-meta { display: none; }
+}
