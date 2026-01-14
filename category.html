@@ -13,8 +13,10 @@
   <link rel="stylesheet" href="./estilos/style.css">
 </head>
 <body>
-   <!-- NAVBAR (responsive: desktop / tablet / móvil) -->
-<nav class="navbar navbar-dark bg-dark px-3 py-3">
+
+
+<!-- NAVBAR (responsive: desktop / tablet / móvil) -->
+<nav class="navbar navbar-dark bg-dark  py-3 ">
   <div class="container">
     <div class="row w-100 align-items-center gx-2">
 
@@ -23,15 +25,30 @@
         <a class="navbar-brand text-white" href="index.html">TodoMarket</a>
       </div>
 
-      <!-- Controles (moneda + carrito) -->
+      <!-- Controles (moneda + auth + carrito) -->
       <div class="col-8 col-md-auto order-2 order-md-3">
-        <div class="d-flex align-items-center gap-3">
-          <select id="select-moneda" class="form-select form-select-sm">
+        <div class="d-flex align-items-center gap-2">
+
+          <!-- Selector de moneda -->
+          <select id="select-moneda" class="form-select form-select-sm" aria-label="Seleccionar moneda">
             <option value="USD">USD</option>
             <option value="VES">VES</option>
           </select>
 
-          <button class="btn btn-warning position-relative" onclick="toggleCarrito()">
+          <!-- Botón Registrarse (icono + texto en desktop) -->
+          <button class="btn btn-outline-light btn-sm d-flex align-items-center gap-1" onclick="abrirRegistro()" aria-label="Registrarse">
+            <i class="bi bi-person-plus" aria-hidden="true"></i>
+            <span class="d-none d-md-inline">Registrarse</span>
+          </button>
+
+          <!-- Botón Iniciar sesión (icono + texto en desktop) -->
+          <button class="btn btn-light btn-sm text-dark d-flex align-items-center gap-1" onclick="abrirLogin()" aria-label="Iniciar sesión">
+            <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+            <span class="d-none d-md-inline">Entrar</span>
+          </button>
+
+          <!-- Carrito -->
+          <button class="btn btn-warning position-relative" onclick="toggleCarrito()" aria-label="Abrir carrito">
             <i class="bi bi-cart3"></i>
             <span id="carrito-count" class="badge bg-danger position-absolute top-0 start-100 translate-middle">0</span>
           </button>
@@ -43,7 +60,6 @@
         <div class="position-relative">
           <div class="input-group">
             <input id="search-input" type="search" class="form-control form-control-sm" placeholder="Buscar productos, marcas, modelos..." aria-label="Buscar productos" autocomplete="off">
-            <button id="search-clear" class="btn btn-outline-light btn-sm" type="button" title="Limpiar búsqueda">✕</button>
           </div>
 
           <!-- Contenedor de resultados en vivo -->
@@ -54,7 +70,6 @@
     </div>
   </div>
 </nav>
-
 
   <div class="container py-4">
     <div class="d-flex align-items-center justify-content-between mb-2">
