@@ -8,6 +8,8 @@
    - Botones de registro/login (navegación)
    - Plantilla de tarjeta en sliders solicitada
    - Mostrar imagen del producto dentro del carrito
+   - Integración de checkout si se carga checkout.html
+   - Formulario de pago móvil / binance / efectivo con comprobante (imagen)
 */
 
 /* ============================
@@ -70,7 +72,7 @@ window.productos = [
    ============================ */
 let carrito = JSON.parse(localStorage.getItem('mi_carrito_v1') || '[]');
 let moneda = localStorage.getItem('mi_moneda_v1') || 'USD';
-let tasaVES = 40;
+let tasaVES = Number(localStorage.getItem('mi_tasa_v1') || 40);
 let estadoBusqueda = { query: '', activeIndex: -1, results: [] };
 
 /* ============================
@@ -79,6 +81,7 @@ let estadoBusqueda = { query: '', activeIndex: -1, results: [] };
 function guardarEstado() {
   localStorage.setItem('mi_carrito_v1', JSON.stringify(carrito));
   localStorage.setItem('mi_moneda_v1', moneda);
+  localStorage.setItem('mi_tasa_v1', tasaVES);
 }
 
 function fallbackImagen(img) {
@@ -91,7 +94,8 @@ function formatearNumero(n) {
 
 function convertirPrecio(valor) {
   const v = Number(valor) || 0;
-  return moneda === "USD" ? `$${formatearNumero(v)}` : `${formatearNumero(v * tasaVES)} Bs`;
+  if (moneda === "USD") return `$${formatearNumero(v)}`;
+  return `${formatearNumero(v * tasaVES)} Bs`;
 }
 
 function escapeHtml(str) {
@@ -147,7 +151,7 @@ function renderSearchDropdown() {
     const precio = convertirPrecio(p.oferta !== "" && p.oferta !== null ? p.oferta : p.precio);
     return `
       <div class="search-item" role="option" data-idx="${idx}" tabindex="-1">
-        <img src="${img}" alt="${escapeHtml(p.nombre)}">
+        <img src="${escapeHtml(img)}" alt="${escapeHtml(p.nombre)}">
         <div class="meta">
           <div class="name">${escapeHtml(p.nombre)}</div>
           <div class="cat">${escapeHtml(p.categoria)}</div>
@@ -240,7 +244,7 @@ function renderGrid(listaProductos) {
     cont.innerHTML += `
       <div class="col-6 col-md-3">
         <div class="card h-100">
-          <img src="${img}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
+          <img src="${escapeHtml(img)}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-start mb-1">
               ${p.oferta && p.oferta !== "" ? `<div class="badge-offer">Oferta</div>` : `<div></div>`}
@@ -294,7 +298,7 @@ function renderSliderCategoria(idContenedor, categoria) {
     const img = fallbackImagen(p.imagen);
     cont.innerHTML += `
       <div class="card h-100 card-slider">
-        <img src="${img}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
+        <img src="${escapeHtml(img)}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start mb-1">
             ${p.oferta && p.oferta !== "" ? `<div class="badge-offer">Oferta</div>` : `<div></div>`}
@@ -358,7 +362,7 @@ function renderSliderOfertas() {
     const img = fallbackImagen(p.imagen);
     cont.innerHTML += `
       <div class="card h-100 card-slider">
-        <img src="${img}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
+        <img src="${escapeHtml(img)}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start mb-1">
             <div class="badge-offer">Oferta</div>
@@ -468,7 +472,7 @@ function eliminarProducto(index) {
 }
 
 /* ============================
-   Actualizar carrito (vista) - ahora incluye imagen del producto
+   Actualizar carrito (vista) - incluye imagen del producto
    ============================ */
 function actualizarCarrito() {
   const cont = document.getElementById("carrito-items");
@@ -491,7 +495,7 @@ function actualizarCarrito() {
     cont.innerHTML += `
       <div class="d-flex justify-content-between align-items-center mb-2">
         <div class="d-flex align-items-center" style="gap:10px; max-width:60%;">
-          <img src="${img}" alt="${escapeHtml(p.nombre)}" style="width:64px; height:64px; object-fit:cover; border-radius:6px; box-shadow:0 4px 10px rgba(0,0,0,0.06);">
+          <img src="${escapeHtml(img)}" alt="${escapeHtml(p.nombre)}" style="width:64px; height:64px; object-fit:cover; border-radius:6px; box-shadow:0 4px 10px rgba(0,0,0,0.06);">
           <div style="min-width:0;">
             <div class="fw-bold" style="font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(p.nombre)}</div>
             <small class="text-muted">x${p.cantidad} • ${convertirPrecio(precioUnit)} c/u</small>
@@ -502,8 +506,8 @@ function actualizarCarrito() {
           <div>${convertirPrecio(subtotal)}</div>
           <div class="mt-1 d-flex justify-content-end gap-1">
             <button class="btn btn-sm btn-outline-secondary" onclick="decrementar(${globalIndex})">-</button>
-            <span class="text-muted px-1 py-1">${p.cantidad}</span>
-            
+            <small class="text-muted p-1">${p.cantidad}</small>
+
             <button class="btn btn-sm btn-outline-secondary" onclick="incrementar(${globalIndex})">+</button>
             <button class="btn btn-sm btn-danger" onclick="eliminarProducto(${globalIndex})">🗑 Eliminar</button>
           </div>
@@ -527,17 +531,10 @@ function toggleCarrito() {
   popup.setAttribute("aria-hidden", !popup.classList.contains("active"));
 }
 
+// checkout ahora redirige a la página de checkout
 function checkout() {
-  if (carrito.length === 0) {
-    alert("El carrito está vacío.");
-    return;
-  }
-  const resumen = carrito.map(p => `${p.nombre} x${p.cantidad}`).join("\n");
-  alert(`Procesando compra:\n\n${resumen}\n\nTotal: ${document.getElementById("carrito-total").textContent}`);
-  carrito = [];
-  guardarEstado();
-  actualizarCarrito();
-  toggleCarrito();
+  guardarEstado && typeof guardarEstado === 'function' ? guardarEstado() : localStorage.setItem('mi_carrito_v1', JSON.stringify(carrito));
+  window.location.href = 'checkout.html';
 }
 
 /* ============================
@@ -626,7 +623,275 @@ function inicializarBuscador() {
 }
 
 /* ============================
-   Inicialización general
+   Integración Checkout en productos.js
+   Ejecuta solo si estamos en checkout.html
+   ============================ */
+(function initCheckoutIntegration() {
+  const isCheckoutPage = !!document.getElementById('checkout-items');
+  if (!isCheckoutPage) return;
+
+  const elItems = document.getElementById('checkout-items');
+  const elSubtotal = document.getElementById('subtotal-text');
+  const elEnvioText = document.getElementById('envio-text');
+  const elTax = document.getElementById('tax-text');
+  const elTotal = document.getElementById('total-text');
+  const elEnvioMsg = document.getElementById('envio-mensaje');
+  const selectMonedaCheckout = document.getElementById('select-moneda');
+  const btnConfirmar = document.getElementById('btn-confirmar');
+  const btnFinalizar = document.getElementById('btn-finalizar');
+
+  // elementos del formulario de pago común
+  const formPagoComun = document.getElementById('form-pago-comun');
+  const inputComprobante = document.getElementById('payer-comprobante');
+  const previewWrapper = document.getElementById('comprobante-preview');
+  const previewImg = document.getElementById('comprobante-img');
+  const previewRemove = document.getElementById('comprobante-remove');
+
+  const DELIVERY_FEE_USD = 1.5;
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+  const ALLOWED_TYPES = ['image/jpeg','image/png','image/webp','image/gif'];
+
+  function _convertirPrecio(valor) {
+    if (typeof convertirPrecio === 'function') return convertirPrecio(valor);
+    const v = Number(valor) || 0;
+    if (moneda === 'USD') return `$${Number(v).toFixed(2)}`;
+    return `${Number(v * tasaVES).toFixed(2)} Bs`;
+  }
+
+  function renderCheckoutItems() {
+    if (!elItems) return;
+    elItems.innerHTML = '';
+    if (!carrito || carrito.length === 0) {
+      elItems.innerHTML = '<div class="text-muted small">Tu carrito está vacío.</div>';
+      return;
+    }
+
+    carrito.forEach(p => {
+      const precioUnit = (p.oferta !== "" && p.oferta !== null) ? Number(p.oferta) : Number(p.precio);
+      const subtotal = precioUnit * (p.cantidad || 1);
+      const img = p.imagen && p.imagen.trim() !== '' ? p.imagen : './img/Productos/default.jpg';
+
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <img src="${escapeHtml(img)}" alt="${escapeHtml(p.nombre)}" style="width:56px;height:56px;object-fit:cover;border-radius:6px;">
+        <div class="meta" style="min-width:0;margin-left:8px;">
+          <div class="name">${escapeHtml(p.nombre)}</div>
+          <div class="qty small text-muted">x${p.cantidad || 1} • ${_convertirPrecio(precioUnit)} c/u</div>
+        </div>
+        <div class="ms-auto fw-bold">${_convertirPrecio(subtotal)}</div>
+      `;
+      elItems.appendChild(row);
+    });
+  }
+
+  function calcularTotalesCheckout() {
+    if (!elSubtotal || !elEnvioText || !elTax || !elTotal || !elEnvioMsg) return;
+
+    let subtotalUSD = 0;
+    carrito.forEach(p => {
+      const precioUnit = (p.oferta !== "" && p.oferta !== null) ? Number(p.oferta) : Number(p.precio);
+      subtotalUSD += precioUnit * (p.cantidad || 1);
+    });
+
+    const taxUSD = 0;
+    const tipoEnvio = document.querySelector('input[name="tipoEnvio"]:checked')?.value || 'nacional';
+    let envioUSD = 0;
+    let envioText = '—';
+    let mostrarMensajeNacional = false;
+
+    if (tipoEnvio === 'delivery') {
+      envioUSD = DELIVERY_FEE_USD;
+      envioText = _convertirPrecio(envioUSD);
+      mostrarMensajeNacional = false;
+    } else {
+      envioUSD = 0;
+      envioText = 'Cobro destino';
+      mostrarMensajeNacional = true;
+    }
+
+    const totalUSD = subtotalUSD + taxUSD + envioUSD;
+
+    elSubtotal.textContent = _convertirPrecio(subtotalUSD);
+    elEnvioText.textContent = (tipoEnvio === 'delivery') ? _convertirPrecio(envioUSD) : envioText;
+    elTax.textContent = _convertirPrecio(taxUSD);
+    elTotal.textContent = _convertirPrecio(totalUSD);
+
+    if (mostrarMensajeNacional) {
+      elEnvioMsg.classList.remove('d-none');
+      elEnvioMsg.innerHTML = 'Este monto se conocerá al momento de realizar el envío y el envío se realizará cobro destino.';
+    } else {
+      elEnvioMsg.classList.add('d-none');
+      elEnvioMsg.innerHTML = '';
+    }
+  }
+
+  // Mostrar/ocultar formulario común (en este diseño siempre visible)
+  function actualizarVistaMetodoPago() {
+    if (formPagoComun) formPagoComun.style.display = '';
+  }
+
+  // Manejo del input file: preview y validación
+  function initComprobanteHandlers() {
+    if (!inputComprobante) return;
+    inputComprobante.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) {
+        previewWrapper && previewWrapper.classList.add('d-none');
+        previewImg && (previewImg.src = '');
+        return;
+      }
+
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        alert('Tipo de archivo no permitido. Usa PNG o JPG.');
+        inputComprobante.value = '';
+        previewWrapper && previewWrapper.classList.add('d-none');
+        return;
+      }
+
+      if (file.size > MAX_FILE_SIZE) {
+        alert('El archivo excede el tamaño máximo de 5 MB.');
+        inputComprobante.value = '';
+        previewWrapper && previewWrapper.classList.add('d-none');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        if (previewImg) previewImg.src = ev.target.result;
+        if (previewWrapper) previewWrapper.classList.remove('d-none');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    if (previewRemove) {
+      previewRemove.addEventListener('click', () => {
+        inputComprobante.value = '';
+        if (previewImg) previewImg.src = '';
+        if (previewWrapper) previewWrapper.classList.add('d-none');
+      });
+    }
+  }
+
+  // Validación de datos de pago antes de enviar
+  function validarDatosPagoAntesDeEnviar() {
+    const nombre = document.getElementById('payer-nombre')?.value?.trim();
+    const apellido = document.getElementById('payer-apellido')?.value?.trim();
+    const telefono = document.getElementById('payer-telefono')?.value?.trim();
+    const cedula = document.getElementById('payer-cedula')?.value?.trim();
+    const comprobanteFile = document.getElementById('payer-comprobante')?.files?.[0];
+
+    if (!nombre || !apellido || !telefono || !cedula) {
+      alert('Por favor completa: nombre, apellido, teléfono y cédula.');
+      return false;
+    }
+
+    if (!comprobanteFile) {
+      alert('Por favor adjunta el comprobante de pago (imagen).');
+      return false;
+    }
+
+    if (!ALLOWED_TYPES.includes(comprobanteFile.type)) {
+      alert('Tipo de archivo no permitido para el comprobante.');
+      return false;
+    }
+    if (comprobanteFile.size > MAX_FILE_SIZE) {
+      alert('El comprobante excede el tamaño máximo permitido (5 MB).');
+      return false;
+    }
+
+    return true;
+  }
+
+  function attachCheckoutEvents() {
+    document.querySelectorAll('input[name="tipoEnvio"]').forEach(r => {
+      r.addEventListener('change', () => {
+        calcularTotalesCheckout();
+      });
+    });
+
+    document.querySelectorAll('input[name="metodoPago"]').forEach(r => {
+      r.addEventListener('change', () => {
+        actualizarVistaMetodoPago();
+      });
+    });
+
+    if (btnConfirmar) {
+      btnConfirmar.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        btnFinalizar && btnFinalizar.focus();
+      });
+    }
+
+    if (btnFinalizar) {
+      btnFinalizar.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!carrito || carrito.length === 0) {
+          alert('Tu carrito está vacío.');
+          return;
+        }
+
+        const metodo = document.querySelector('input[name="metodoPago"]:checked')?.value;
+        const direccion = document.getElementById('direccion')?.value?.trim();
+
+        if (!metodo) { alert('Selecciona un método de pago.'); return; }
+        if (!direccion) {
+          if (!confirm('No has ingresado una dirección. ¿Deseas continuar?')) return;
+        }
+
+        // Validar datos del pago (común para todos los métodos según tu petición)
+        if (!validarDatosPagoAntesDeEnviar()) return;
+
+        // Simular procesamiento
+        btnFinalizar.disabled = true;
+        const originalText = btnFinalizar.textContent;
+        btnFinalizar.textContent = 'Procesando...';
+
+        setTimeout(() => {
+          alert('Pago procesado correctamente. Gracias por tu compra.');
+
+          carrito = [];
+          guardarEstado();
+
+          renderCheckoutItems();
+          calcularTotalesCheckout();
+          typeof actualizarCarrito === 'function' && actualizarCarrito();
+
+          btnFinalizar.disabled = false;
+          btnFinalizar.textContent = originalText;
+
+          window.location.href = 'index.html';
+        }, 1200);
+      });
+    }
+
+    if (selectMonedaCheckout) {
+      selectMonedaCheckout.value = moneda;
+      selectMonedaCheckout.addEventListener('change', (e) => {
+        moneda = e.target.value;
+        guardarEstado();
+        renderCheckoutItems();
+        calcularTotalesCheckout();
+      });
+    }
+
+    initComprobanteHandlers();
+  }
+
+  function initCheckout() {
+    // Mostrar/ocultar formulario según método (en este caso siempre visible)
+    actualizarVistaMetodoPago();
+
+    renderCheckoutItems();
+    calcularTotalesCheckout();
+    attachCheckoutEvents();
+  }
+
+  initCheckout();
+})();
+
+/* ============================
+   Inicialización general al cargar la página
    ============================ */
 document.addEventListener("DOMContentLoaded", () => {
   inicializarBuscador();
