@@ -27,7 +27,7 @@
 .carrito-popup {
   position: fixed;
   top: 0; right: 0;
-  width: 360px;
+  width: 420px;
   height: 100vh;
   background: #fff;
   box-shadow: -3px 0 20px rgba(0,0,0,0.15);
@@ -97,7 +97,7 @@
 .card .card-title {
   font-size: 14px;
   line-height: 1.2;
-  height: 2.4em; /* 2 lines */
+  height: 1.2em; /* 2 lines */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -157,7 +157,7 @@
 
 /* Info adicional (envío, stock) */
 .product-meta {
-  font-size: 12px;
+  font-size: 10px;
   color: var(--muted);
   margin-bottom: 8px;
 }
