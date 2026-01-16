@@ -20,7 +20,7 @@
       <!-- LOGO -->
       <a href="index.html" class="logo">todomarket.com</a>
 
-      <!-- BUSCADOR DESKTOP -->
+      <!-- BUSCADOR DESKTOP (solo escritorio) -->
       <div class="buscador-wrapper flex-grow-1 mx-4 d-none d-md-block">
         <div class="position-relative">
           <input id="search-input" type="search" class="form-control buscador-input"
@@ -29,11 +29,11 @@
         </div>
       </div>
 
-      <!-- ZONA / MONEDA / CARRITO / HAMBURGUESA -->
-      <div class="d-flex align-items-center ">
+      <!-- ZONA / MONEDA / CARRITO / LOGIN -->
+      <div class="d-flex align-items-center gap-2">
 
-        <!-- Zona -->
-        <div class="dropdown">
+        <!-- Zona (solo escritorio) -->
+        <div class="dropdown d-none d-md-block">
           <button class="btn btn-sm btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
             Zona Lara
           </button>
@@ -42,9 +42,9 @@
           </ul>
         </div>
 
-        <!-- Moneda -->
-        <div class="dropdown moneda-dropdown">
-          <button class="btn btn-sm btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+        <!-- Moneda (solo escritorio) -->
+        <div class="dropdown moneda-dropdown d-none d-md-block">
+          <button class="btn btn-sm btn-outline-light dropdown-toggle" data-bs-toggle="dropdown" id="btn-moneda">
             Moneda USD
           </button>
           <ul class="dropdown-menu">
@@ -53,22 +53,22 @@
           </ul>
         </div>
 
-        <!-- Carrito -->
+        <!-- Carrito (SIEMPRE visible) -->
         <button class="btn btn-cart position-relative" onclick="toggleCarrito()">
           <i class="bi bi-basket2-fill"></i>
           <span class="badge-carrito position-absolute rounded-pill" id="carrito-count">1</span>
         </button>
 
-        <!-- Hamburguesa -->
-        <button class="navbar-toggler d-md-none ms-1" type="button" data-bs-toggle="collapse"
-          data-bs-target="#menuMobile">
-          <i class="bi bi-list-ul" style="font-size: 32px;"></i>
-        </button>
+        <!-- Login (solo escritorio) -->
+        <a href="login.html" class="btn btn-sm btn-outline-light d-none d-md-flex align-items-center">
+          <i class="bi bi-person fs-5 me-1"></i>
+          <span>Iniciar Sesión</span>
+        </a>
 
       </div>
     </div>
 
-    <!-- BUSCADOR MÓVIL -->
+    <!-- BUSCADOR MÓVIL (solo móvil/tablet) -->
     <div class="mt-2 d-md-none">
       <div class="position-relative">
         <input id="search-input-mobile" type="search" class="form-control buscador-input"
@@ -77,42 +77,65 @@
       </div>
     </div>
 
-    <!-- MENÚ HAMBURGUESA -->
-    <div class="collapse mt-2" id="menuMobile">
-      <div class="bg-light p-3 rounded">
-
-        <a href="register.html" class="btn-link d-block py-2">
-          <i class="bi bi-person-plus me-1"></i> Registrarse
-        </a>
-
-        <a href="login.html" class="btn-link d-block py-2">
-          <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
-        </a>
-
-        <hr>
-
-        <a href="#" class="submenu-link d-block py-2">Atención al Cliente</a>
-        <a href="#" class="submenu-link d-block py-2">Zonas de Entrega</a>
-        <a href="#" class="submenu-link d-block py-2">Más vendidos</a>
-        <a href="#" class="submenu-link d-block py-2">Productos Recientes</a>
-        <a href="#" class="submenu-link d-block py-2">Ofertas</a>
-
-      </div>
-    </div>
-
   </div>
-
-  <!-- SUBMENÚ DESKTOP -->
-  <nav class="navbar-submenu bg-light border-top d-none d-md-block">
-    <div class="container d-flex justify-content-center gap-4 py-2">
-      <a href="#" class="submenu-link">Atención al Cliente</a>
-      <a href="#" class="submenu-link">Zonas de Entrega</a>
-      <a href="#" class="submenu-link">Más vendidos</a>
-      <a href="#" class="submenu-link">Productos Recientes</a>
-      <a href="#" class="submenu-link">Ofertas</a>
-    </div>
-  </nav>
 </header>
+
+
+<!-- MENÚ STICKY BOTTOM MÓVIL -->
+<nav class="menu-movil d-md-none bg-success text-white py-2 fixed-bottom border-top">
+  <div class="container">
+    <div class="d-flex justify-content-between text-center">
+
+      <!-- Zona -->
+      <div class="menu-item">
+        <i class="bi bi-geo-alt-fill fs-4"></i>
+        <div class="menu-label">Lara</div>
+      </div>
+
+      <!-- Categorías -->
+      <div class="menu-item dropdown">
+        <i class="bi bi-grid-3x3-gap fs-4 dropdown-toggle" data-bs-toggle="dropdown"></i>
+        <div class="menu-label">Mercado</div>
+        <ul class="dropdown-menu dropdown-menu-end text-start" id="menu-categorias-movil">
+          <!-- Se llena dinámicamente -->
+        </ul>
+      </div>
+
+      <!-- Login -->
+      <div class="menu-item">
+        <a href="login.html" class="text-white text-decoration-none">
+          <i class="bi bi-person fs-4"  ></i>
+          <div class="menu-label"   >Iniciar</div>
+        </a>
+      </div>
+
+      <!-- Moneda -->
+      <div class="menu-item dropdown">
+        <i class="bi bi-currency-dollar fs-4 dropdown-toggle" data-bs-toggle="dropdown"></i>
+        <div class="menu-label">Moneda</div>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#" data-moneda="USD" style="color: black;">Dólar (USD)</a></li>
+          <li><a class="dropdown-item" href="#" data-moneda="VES" style="color: black;">Bolívares (VES)</a></li>
+        </ul>
+      </div>
+
+      <!-- Ver más -->
+      <div class="menu-item dropdown">
+        <i class="bi bi-plus-circle fs-4 dropdown-toggle" data-bs-toggle="dropdown"></i>
+        <div class="menu-label">Ver más</div>
+        <ul class="dropdown-menu dropdown-menu-end text-start">
+          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Atención al Cliente</a></li>
+          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Zonas de Entrega</a></li>
+          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Más vendidos</a></li>
+          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Productos Recientes</a></li>
+          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Ofertas</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
 
 
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -252,7 +275,7 @@
   </div>
 
   <!-- Back to top -->
-  <button id="back-to-top" class="btn btn-warning position-fixed" style="right:18px; bottom:18px; display:none;" aria-label="Volver arriba">
+  <button id="back-to-top" class="btn btn-warning position-fixed" style="right:18px; bottom:80px; display:none;" aria-label="Volver arriba">
     <i class="bi bi-arrow-up"></i>
   </button>
 </footer>
