@@ -1,3 +1,71 @@
+/* Estilo general del navbar */
+.navbar-principal {
+  background-color: #198754; /* verde Bootstrap */
+  color: white;
+  font-size: 14px;
+}
+.navbar-top .logo {
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+.link-categorias {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+.buscador-wrapper .buscador-input {
+  border-radius: 8px;
+  border: none;
+  padding: 8px 12px;
+}
+.btn-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-link:hover{
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-cart {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  font-size: 30px;
+}
+
+.badge-carrito{
+
+  background-color: #f1f1f1;
+  color: #111;
+  padding: 0px 7px;
+  font-size: 13px;
+  top: 0px;
+  left: 16px;
+
+}
+
+.navbar-submenu {
+  font-size: 13px;
+}
+.submenu-link {
+  color: #198754;
+  text-decoration: none;
+  font-weight: 500;
+}
+.submenu-link:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
 /* Slider */
 .slider-container {
   display: flex;
@@ -192,8 +260,9 @@
   left: 0;
   right: 0;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 20px;
   max-height: 420px;
+  width: 93vh;
   overflow-y: auto;
   z-index: 2000;
   padding: 8px;
@@ -293,6 +362,7 @@
 
 
 /* Footer styles */
+footer{ background-color: #198754;}
 footer { font-size: 14px; }
 footer .badge-offer { background: rgba(255,153,0,0.12); color: #ffffff; }
 footer a { transition: color .12s ease; }
