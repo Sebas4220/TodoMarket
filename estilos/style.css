@@ -1,16 +1,30 @@
+ 
+:root {
+  --primary: #0A3D62;      /* Azul petróleo */
+  --accent: #2ECC71;       /* Verde menta */
+  --accent-light: rgba(46,204,113,0.15);
+  --background: #FFFFFF;
+  --background-soft: #F4F6F7;
+  --text-dark: #1C1C1C;
+  --text-muted: #7f8c8d;
+  --border-light: #E5E7E9;
+}
+
+
+
 /* Estilo general del navbar */
 .navbar-principal {
-  background-color: #198754; /* verde Bootstrap */
-  color: white;
+  background-color: var(--accent); /* verde Bootstrap */
+  color: var(--background);
   font-size: 14px;
 }
 .navbar-top .logo {
   font-weight: bold;
-  color: white;
+  color: var(--background);
   text-decoration: none;
 }
 .link-categorias {
-  color: white;
+  color: var(--background);
   text-decoration: none;
   font-weight: 500;
 }
@@ -20,13 +34,13 @@
   padding: 8px 12px;
 }
 .btn-link {
-  color: white;
+  color: var(--background);
   text-decoration: none;
   font-weight: 500;
 }
 
 .btn-link:hover{
-  color: white;
+  color: var(--background);
   text-decoration: none;
   font-weight: 500;
 }
@@ -34,15 +48,15 @@
 .btn-cart {
   background: transparent;
   border: none;
-  color: white;
+  color: var(--background);
   font-size: 20px;
   font-size: 30px;
 }
 
 .badge-carrito{
 
-  background-color: #f1f1f1;
-  color: #111;
+  background-color: var(--background);
+  color: var(--primary);
   padding: 0px 7px;
   font-size: 13px;
   top: 0px;
@@ -51,10 +65,14 @@
 }
 
 .navbar-submenu {
-  font-size: 13px;
+  background-color: var(--background);
+  padding: 5px 0px;
+
 }
 .submenu-link {
-  color: #198754;
+  font-size: 13px;
+
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
 }
@@ -70,7 +88,6 @@
 .slider-container {
   display: flex;
   overflow-x: auto;
-  gap: 12px;
   scroll-behavior: smooth;
   padding-bottom: 10px;
   padding-top: 6px;
@@ -79,11 +96,11 @@
 
 .slider-btn {
   position: absolute;
-  top: 40%;
-  background: rgba(0,0,0,0.7);
-  color: white;
+  top: 25%;
+  background: var(--accent-light);
+  color: var(--primary);
   border: none;
-  padding: 8px 12px;
+  padding: 12px 16px;
   cursor: pointer;
   z-index: 10;
   border-radius: 6px;
@@ -97,8 +114,8 @@
   top: 0; right: 0;
   width: 420px;
   height: 100vh;
-  background: #fff;
-  box-shadow: -3px 0 20px rgba(0,0,0,0.15);
+  background: var(--background);
+  box-shadow: -3px 0 20px rgba(0,0,0,0.25);
   transform: translateX(100%);
   transition: transform .28s ease;
   padding: 20px;
@@ -123,7 +140,7 @@
 .bi-person-fill{
 
   font-size: 30px;
-  color: #fff;
+  color: var(--background);
   padding: 0;
   margin: 0;
 
@@ -132,6 +149,7 @@
 
 .menu-movil {
   border-top: 1px solid rgba(255,255,255,0.2);
+  background-color: var(--accent);
   z-index: 999;
 }
 .menu-item {
@@ -139,7 +157,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white;
+  color: var(--background);
 }
 .menu-label {
   font-size: 12px;
@@ -150,44 +168,33 @@
   cursor: pointer;
 }
 .menu-item a {
-  color: white;
+  color: var(--background);
 }
 .menu-item .dropdown-menu {
   font-size: 14px;
 }
 
 
-
-/* ============================
-   Estilos generales y utilidades
-   ============================ */
-:root{
-  --card-radius: 10px;
-  --shadow-soft: 0 6px 18px rgba(0,0,0,0.08);
-  --accent: #ff9900; /* color tipo Amazon */
-  --muted: #6c757d;
-  --small: 13px;
-}
-
 /* Reset pequeño para cards */
 .card {
-  border: 0;
-  border-radius: var(--card-radius);
-  box-shadow: var(--shadow-soft);
+  border: none;
+  margin: 5px;
+  border-radius: 10px;
+  box-shadow: 0 0px 15px rgba(0,0,0,0.12);
   transition: transform .12s ease, box-shadow .12s ease;
   overflow: hidden;
-  background: #fff;
+  background: var(--background);
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 7px 5px rgba(0,0,0,0.12);
 }
 
 /* Imagen */
 .card .card-img-top {
   width: 100%;
-  height: 180px;
+  height: 140px;
   object-fit: contain;
   background: linear-gradient(180deg, #fff, #f8f8f8);
   padding: 12px;
@@ -201,15 +208,15 @@
 
 /* Título: máximo 2 líneas con ellipsis */
 .card .card-title {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.2;
-  height: 1.2em; /* 2 lines */
+  height: 1em; /* 2 lines */
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
   font-weight: 600;
 }
 
@@ -224,7 +231,7 @@
 }
 .stars {
   color: #f0c14b;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1;
 }
 
@@ -237,18 +244,18 @@
 }
 .price-current {
   color: #111;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
 }
 .price-old {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
   text-decoration: line-through;
 }
 
 /* Badge de oferta o prime */
 .badge-offer {
-  background: rgba(255,153,0,0.12);
+  background: var(--accent-light);
   color: var(--accent);
   font-weight: 700;
   padding: 4px 8px;
@@ -297,7 +304,7 @@
   top: calc(100% + 6px);
   left: 0;
   right: 0;
-  background: #fff;
+  background: var(--background);
   max-height: 420px;
   width: 100%;
   overflow-y: auto;
@@ -315,14 +322,14 @@
   cursor: pointer;
 }
 .search-item:hover, .search-item.active {
-  background: #f8f9fa;
+  background: var(--background);
 }
 
 .search-item img {
   width: 56px;
   height: 56px;
   object-fit: contain;
-  background: #fff;
+  background: var(--background);
   border-radius: 6px;
   padding: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
@@ -335,7 +342,7 @@
 .search-item .meta .name {
   font-size: 13px;
   font-weight: 600;
-  color: #111;
+  color: var(--primary);
   line-height: 1.1;
   white-space: nowrap;
   overflow: hidden;
@@ -343,12 +350,12 @@
 }
 .search-item .meta .cat {
   font-size: 12px;
-  color: #6c757d;
+  color: var(--primary);
 }
 .search-item .meta .price {
   font-size: 14px;
   font-weight: 700;
-  color: #111;
+  color: var(--primary);
 }
 
 /* Acciones rápidas dentro del resultado */
@@ -365,7 +372,7 @@
 /* Mensaje cuando no hay resultados */
 .search-empty {
   padding: 12px;
-  color: #6c757d;
+  color: var(--primary);
   text-align: center;
   font-size: 14px;
 }
@@ -376,7 +383,7 @@
   top: calc(100% + 6px);
   left: 0;
   right: 0;
-  background: #fff;
+  background: var(--background);
   border-radius: 8px;
   max-height: 420px;
   overflow-y: auto;
@@ -399,11 +406,10 @@
 
 
 /* Footer styles */
-footer{ background-color: #198754;}
-footer { font-size: 14px; }
-footer .badge-offer { background: rgba(255,153,0,0.12); color: #ffffff; }
-footer a { transition: color .12s ease; }
-footer a:hover { color: #fff; text-decoration: none; }
+.footer{ background-color: var(--accent);}
+.footer { font-size: 14px; }
+.footer a { transition: color .12s ease; }
+.footer a:hover { color: var(--background); text-decoration: none; }
 
 /* Payment icons fallback spacing */
 footer img[alt] { margin-left: 6px; }
