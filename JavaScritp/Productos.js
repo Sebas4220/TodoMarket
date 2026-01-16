@@ -427,7 +427,7 @@ function actualizarBotonProducto(index) {
         <button class="btn btn-outline-secondary btn-sm" onclick="decrementar(${index})">-</button>
         <span class="fw-bold" id="cantidad-${index}">${item.cantidad}</span>
         <button class="btn btn-outline-secondary btn-sm" onclick="incrementar(${index})">+</button>
-        <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${index})">🗑</button>
+        <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${index})"><i class="bi bi-trash3-fill"></i></button>
       </div>
     `;
   });
@@ -509,7 +509,7 @@ function actualizarCarrito() {
             <small class="text-muted p-1">${p.cantidad}</small>
 
             <button class="btn btn-sm btn-outline-secondary" onclick="incrementar(${globalIndex})">+</button>
-            <button class="btn btn-sm btn-danger" onclick="eliminarProducto(${globalIndex})">🗑 Eliminar</button>
+            <button class="btn btn-sm btn-danger" onclick="eliminarProducto(${globalIndex})"><i class="bi bi-trash3-fill"></i></button>
           </div>
         </div>
       </div>
