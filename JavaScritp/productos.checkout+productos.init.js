@@ -122,6 +122,7 @@ window.initCheckout = function () {
    ============================================ */
 
 window.initApp = function () {
+
   // Render inicial
   if (window.renderAll) renderAll();
 
@@ -133,6 +134,9 @@ window.initApp = function () {
 
   // Checkout (solo si existe)
   if (window.initCheckout) initCheckout();
+
+  // Categorías dinámicas en menú móvil
+  if (window.initCategoriasMovil) initCategoriasMovil();
 };
 
 /* ============================================
@@ -155,12 +159,31 @@ document.addEventListener("click", e => {
   if (window.actualizarCarrito) actualizarCarrito();
   if (window.initCheckout) initCheckout();
 
-  // Actualizar texto del botón en el menú
+  // Actualizar texto del botón en menú desktop
   const dropdownBtn = document.querySelector(".moneda-dropdown .dropdown-toggle");
-  if (dropdownBtn) {
-    dropdownBtn.textContent = `Moneda ${nueva}`;
-  }
+  if (dropdownBtn) dropdownBtn.textContent = `Moneda ${nueva}`;
 });
+
+/* ============================================
+   Cargar categorías dinámicas en menú móvil
+   ============================================ */
+
+window.initCategoriasMovil = function () {
+  const cont = document.getElementById("menu-categorias-movil");
+  if (!cont) return;
+
+  cont.innerHTML = "";
+  const categorias = getCategorias();
+
+  categorias.forEach(cat => {
+    const item = document.createElement("li");
+    item.innerHTML = `
+      <a class="dropdown-item" style="color: black;" href="category.html?cat=${encodeURIComponent(cat)}">
+        ${escapeHtml(cat)}
+      </a>`;
+    cont.appendChild(item);
+  });
+};
 
 /* Ejecutar al cargar */
 document.addEventListener("DOMContentLoaded", initApp);
