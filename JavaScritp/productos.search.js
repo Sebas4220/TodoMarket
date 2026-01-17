@@ -73,9 +73,9 @@ window.renderSearchDropdown = function () {
             <div class="price">${precio}</div>
           </div>
           <div class="actions">
-            <button class="btn btn-sm btn-outline-primary"
+            <button class="btn btn-sm btn-outline-primary" style="background-color: var(--accent); color: var(--background); border:none;"
               onclick="event.stopPropagation(); agregarAlCarrito(${indexGlobal});">
-              Agregar
+              Agregar al carrito
             </button>
             <button class="btn btn-sm btn-outline-secondary"
               onclick="event.stopPropagation(); abrirProducto(${indexGlobal});">

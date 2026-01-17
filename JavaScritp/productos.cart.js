@@ -43,7 +43,7 @@ window.actualizarBotonProducto = function (index) {
     if (!item) {
       cont.innerHTML = `
         <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">
-          Agregar
+          Agregar al carrito
         </button>
       `;
       return;

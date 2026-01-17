@@ -71,9 +71,9 @@ window.renderGrid = function (lista) {
               ${precioAntiguo ? `<div class="price-old">${precioAntiguo}</div>` : ""}
             </div>
             <div class="product-meta">Tiempo de entrega • 90 minutos</div>
-            <div class="product-meta">Envío Nacionales • Entrega en 2-4 días</div>
+            
             <div class="acciones-producto" id="acciones-${index}">
-              <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">Agregar</button>
+              <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">Agregar al carrito</button>
             </div>
           </div>
         </div>
@@ -118,9 +118,9 @@ window.renderSliderCategoria = function (idContenedor, categoria) {
             ${precioAntiguo ? `<div class="price-old">${precioAntiguo}</div>` : ""}
           </div>
           <div class="product-meta">Tiempo de entrega • 90 minutos</div>
-          <div class="product-meta">Envío Nacionales • Entrega en 2-4 días</div>
+          
           <div class="acciones-producto" id="acciones-${globalIndex}-slider">
-            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${globalIndex})">Agregar</button>
+            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${globalIndex})">Agregar al carrito</button>
           </div>
         </div>
       </div>
@@ -159,13 +159,13 @@ window.renderSliderOfertas = function () {
             <div class="text-muted">(${p.reviews || Math.floor(Math.random() * 200 + 1)})</div>
           </div>
           <div class="price-row">
-            <div class="price-current text-danger">${precio}</div>
+            <div class="price-current">${precio}</div>
             <div class="price-old">${precioAntiguo}</div>
           </div>
           <div class="product-meta">Tiempo de entrega • 90 minutos</div>
-          <div class="product-meta">Envío Nacionales • Entrega en 2-4 días</div>
+          
           <div class="acciones-producto" id="acciones-${globalIndex}-oferta">
-            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${globalIndex})">Agregar</button>
+            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${globalIndex})">Agregar al carrito</button>
           </div>
         </div>
       </div>
