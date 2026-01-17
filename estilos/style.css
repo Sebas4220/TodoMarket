@@ -148,7 +148,6 @@
 
 
 .menu-movil {
-  border-top: 1px solid rgba(255,255,255,0.2);
   background-color: var(--accent);
   z-index: 999;
   border-radius: 35px 35px 0px 0px ;
