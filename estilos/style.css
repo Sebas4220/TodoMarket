@@ -1,13 +1,13 @@
  
 :root {
-  --primary: #0A3D62;      /* Azul petróleo */
-  --accent: #2ECC71;       /* Verde menta */
+  --accent: #009D71;       /* Verde menta */
   --accent-light: rgba(46,204,113,0.15);
   --background: #FFFFFF;
   --background-soft: #F4F6F7;
   --text-dark: #1C1C1C;
   --text-muted: #7f8c8d;
   --border-light: #E5E7E9;
+  --Amarillo:#FDCB6E;
 }
 
 
@@ -56,7 +56,7 @@
 .badge-carrito{
 
   background-color: var(--background);
-  color: var(--primary);
+  color: var(--text-dark);
   padding: 0px 7px;
   font-size: 13px;
   top: 0px;
@@ -80,7 +80,17 @@
   text-decoration: underline;
 }
 
+.btn-login{
 
+background-color: var(--background);
+color: var(--text-dark);
+text-decoration: none ;
+margin-top: -5px;
+padding: 5px 20px 5px 20px;
+font-size: 12px;
+border-radius: 10px;
+
+}
 
 
 
@@ -98,7 +108,7 @@
   position: absolute;
   top: 25%;
   background: var(--accent-light);
-  color: var(--primary);
+  color: var(--text-dark);
   border: none;
   padding: 12px 16px;
   cursor: pointer;
@@ -146,49 +156,76 @@
 
 }
 
-
 .menu-movil {
   background-color: var(--accent);
   z-index: 999;
-  border-radius: 35px 35px 0px 0px ;
-  
+  border-radius: 35px 35px 0 0;
+  box-shadow: 0 -2px 12px rgba(0,0,0,0.1);
 }
+
 .menu-item {
-  padding-top: 15px;
-  padding-bottom: 8px;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: var(--background);
+  position: relative;
+}
 
-}
-.menu-label {
-  font-size: 12px;
-  margin-top: 4px;
-}
 .menu-item i {
   line-height: 1;
   cursor: pointer;
 }
-.menu-item a {
+
+.menu-label {
+  font-size: 8px;
+  margin-top: 4px;
   color: var(--background);
-  
 }
+
+/* Botón login flotante */
+.login-button {
+  position: relative;
+  margin-top: -30px;
+}
+.login-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background);
+  color: var(--accent);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-decoration: none;
+  margin-bottom: 4px;
+}
+.login-circle:hover {
+  background-color: #fff;
+  color: var(--accent);
+}
+
+/* Dropdowns */
 .menu-item .dropdown-menu {
   font-size: 14px;
+}
+.menu-item .dropdown-menu .dropdown-item {
+  color: #111;
 }
 
 
 /* Reset pequeño para cards */
 .card {
   border: none;
-  margin: 5px;
+  margin: 3px;
   border-radius: 10px;
   box-shadow: 0 0px 15px rgba(0,0,0,0.12);
   transition: transform .12s ease, box-shadow .12s ease;
   overflow: hidden;
   background: var(--background);
+  
+  
 }
 
 .card:hover {
@@ -209,6 +246,7 @@
 .card .card-body {
   padding: 12px;
   text-align: left;
+  
 }
 
 /* Título: máximo 2 líneas con ellipsis */
@@ -229,7 +267,7 @@
 .product-rating {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   font-size: var(--small);
   color: var(--muted);
   margin-bottom: 8px;
@@ -280,6 +318,14 @@
   margin-bottom: 8px;
 }
 
+.btn-primary{
+
+  background-color: var(--accent);
+  border: none;
+
+}
+
+
 /* Acciones: agregar / cantidad / eliminar */
 .acciones-producto {
   min-height: 44px;
@@ -293,14 +339,27 @@
 
 /* Layout responsive: ajustar imagen en grid pequeño */
 @media (max-width: 576px) {
-  .card .card-img-top { height: 140px; padding: 8px; }
-  .price-current { font-size: 16px; }
+  .card .card-img-top { height: 120px; padding: 8px; }
+  .price-current { font-size: 14px; }
+
 }
+
+
 
 /* Slider card tweaks */
 .card.card-slider {
-  min-width: 200px;
-  max-width: 220px;
+  min-width: 178.8px;
+  max-width: 230px;
+}
+
+#search-input:focus{
+
+box-shadow: none;
+}
+
+#search-input-mobile:focus{
+
+box-shadow: none;
 }
 
 /* Search dropdown */
@@ -347,7 +406,7 @@
 .search-item .meta .name {
   font-size: 13px;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--text-dark);
   line-height: 1.1;
   white-space: nowrap;
   overflow: hidden;
@@ -355,12 +414,12 @@
 }
 .search-item .meta .cat {
   font-size: 12px;
-  color: var(--primary);
+  color: var(--text-dark);
 }
 .search-item .meta .price {
   font-size: 14px;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--text-dark);
 }
 
 /* Acciones rápidas dentro del resultado */
@@ -377,7 +436,7 @@
 /* Mensaje cuando no hay resultados */
 .search-empty {
   padding: 12px;
-  color: var(--primary);
+  color: var(--text-dark);
   text-align: center;
   font-size: 14px;
 }
@@ -406,6 +465,11 @@
 /* Espaciado extra para el input en móviles */
 @media (max-width: 767.98px) {
   .navbar .input-group { width: 100%; }
+  /* Slider card tweaks */
+.card.card-slider {
+  min-width: 194px;
+  max-width: 200px;
+}
 }
 
 
