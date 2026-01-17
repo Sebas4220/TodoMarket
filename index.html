@@ -231,7 +231,7 @@
   </div>
 
   <!-- Back to top -->
-  <button id="back-to-top" class="btn btn-warning position-fixed" style="right:18px; bottom:80px; display:none;" aria-label="Volver arriba">
+  <button id="back-to-top" class="btn btn-warning position-fixed" style="right:18px; bottom:100px; display:none;" aria-label="Volver arriba">
     <i class="bi bi-arrow-up"></i>
   </button>
 </footer>
@@ -244,14 +244,18 @@
 
       <!-- Zona -->
       <div class="menu-item">
-        <i class="bi bi-geo-alt-fill fs-4"></i>
+        <i class="bi bi-geo-alt-fill fs-3">
         <div class="menu-label">Lara</div>
+            
+        </i>
       </div>
 
       <!-- Categorías -->
       <div class="menu-item dropdown">
-        <i class="bi bi-grid-3x3-gap fs-4 dropdown-toggle" data-bs-toggle="dropdown"></i>
-        <div class="menu-label">Mercado</div>
+        <i class="bi bi-grid-3x3-gap fs-3 " data-bs-toggle="dropdown">
+            <div class="menu-label">Mercado</div>
+        </i>
+        
         <ul class="dropdown-menu dropdown-menu-end text-start" id="menu-categorias-movil">
           <!-- Se llena dinámicamente -->
         </ul>
@@ -259,16 +263,18 @@
 
       <!-- Login -->
       <div class="menu-item">
-        <a href="login.html" class="text-white text-decoration-none">
-          <i class="bi bi-person fs-4"  ></i>
-          <div class="menu-label"   >Iniciar</div>
+        <a href="login.html" class="text-white text-decoration-none" style="position: relative;">
+          <i class="bi bi-person " style="font-size: 50px; position: absolute; top: -43px; left: -47px; border-radius: 50%; width: 100px; height: 100px; background-color: var(--accent); padding: 20px;"  >
+            <div class="menu-label m-0 p-0" >Iniciar</div>
+          </i>
         </a>
       </div>
 
       <!-- Moneda -->
       <div class="menu-item dropdown">
-        <i class="bi bi-currency-dollar fs-4 dropdown-toggle" data-bs-toggle="dropdown"></i>
+        <i class="bi bi-currency-dollar fs-3 " data-bs-toggle="dropdown">
         <div class="menu-label">Moneda</div>
+        </i>
         <ul class="dropdown-menu dropdown-menu-end">
           <li><a class="dropdown-item" href="#" data-moneda="USD" style="color: black;">Dólar (USD)</a></li>
           <li><a class="dropdown-item" href="#" data-moneda="VES" style="color: black;">Bolívares (VES)</a></li>
@@ -277,8 +283,10 @@
 
       <!-- Ver más -->
       <div class="menu-item dropdown">
-        <i class="bi bi-plus-circle fs-4 dropdown-toggle" data-bs-toggle="dropdown"></i>
+        <i class="bi bi-plus-circle fs-3" data-bs-toggle="dropdown">
         <div class="menu-label">Ver más</div>
+
+        </i>
         <ul class="dropdown-menu dropdown-menu-end text-start">
           <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Atención al Cliente</a></li>
           <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Zonas de Entrega</a></li>
