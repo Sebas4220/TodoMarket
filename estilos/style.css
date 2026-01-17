@@ -139,7 +139,7 @@
 
 .bi-person-fill{
 
-  font-size: 30px;
+  font-size: 40px;
   color: var(--background);
   padding: 0;
   margin: 0;
@@ -151,13 +151,18 @@
   border-top: 1px solid rgba(255,255,255,0.2);
   background-color: var(--accent);
   z-index: 999;
+  border-radius: 35px 35px 0px 0px ;
+  
 }
 .menu-item {
+  padding-top: 15px;
+  padding-bottom: 8px;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: var(--background);
+
 }
 .menu-label {
   font-size: 12px;
@@ -169,6 +174,7 @@
 }
 .menu-item a {
   color: var(--background);
+  
 }
 .menu-item .dropdown-menu {
   font-size: 14px;
