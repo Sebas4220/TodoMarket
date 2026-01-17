@@ -18,7 +18,7 @@
     <div class="d-flex align-items-center justify-content-between">
 
       <!-- LOGO -->
-      <a href="index.html" class="logo">todomarket.com</a>
+      <a href="index.html" class="logo"><img src="./img/LOGO.png" width="200px" alt=""></a>
 
       <!-- BUSCADOR DESKTOP (solo escritorio) -->
       <div class="buscador-wrapper flex-grow-1 mx-4 d-none d-md-block">
@@ -56,11 +56,11 @@
         <!-- Carrito (SIEMPRE visible) -->
         <button class="btn btn-cart position-relative" onclick="toggleCarrito()">
           <i class="bi bi-basket2-fill"></i>
-          <span class="badge-carrito position-absolute rounded-pill" id="carrito-count">1</span>
+          <span class="badge-carrito position-absolute rounded-pill" id="carrito-count">0</span>
         </button>
 
         <!-- Login (solo escritorio) -->
-        <a href="login.html" class="btn btn-sm btn-outline-light d-none d-md-flex align-items-center">
+        <a href="login.html" class="btn-login d-none d-md-flex align-items-center">
           <i class="bi bi-person fs-5 me-1"></i>
           <span>Iniciar Sesión</span>
         </a>
@@ -109,7 +109,7 @@
 </div>
 
 
-  <div class="container py-1">
+  <div class="container py-1 px-3">
 
     <!-- TODOS LOS PRODUCTOS 
     <h3 class="mb-3">Todos los productos</h3>
@@ -205,7 +205,7 @@
         <h6 class="text-light text-uppercase fw-bold mb-3">Suscríbete</h6>
         <form id="footer-newsletter" class="d-flex flex-column gap-2" onsubmit="return false;">
           <input id="footer-email" type="email" class="form-control form-control-sm" placeholder="Tu correo" aria-label="Correo para newsletter" required>
-          <button id="footer-subscribe" class="btn btn-warning btn-sm">Suscribirme</button>
+          <button id="footer-subscribe" class="btn btn-sm" style="background-color: var(--Amarillo); color: var(--text-dark);">Suscribirme</button>
           <small id="footer-news-msg" class="text-success visually-hidden">¡Gracias! Revisa tu correo.</small>
         </form>
       </div>
@@ -231,74 +231,66 @@
   </div>
 
   <!-- Back to top -->
-  <button id="back-to-top" class="btn btn-warning position-fixed" style="right:18px; bottom:100px; display:none;" aria-label="Volver arriba">
+  <button id="back-to-top" class="btn position-fixed" style="background-color: var(--Amarillo); color: var(--text-dark); right:18px; bottom:100px; display:none;" aria-label="Volver arriba">
     <i class="bi bi-arrow-up"></i>
   </button>
 </footer>
 
 
-<!-- MENÚ STICKY BOTTOM MÓVIL -->
-<nav class="menu-movil d-md-none  text-white py-2 fixed-bottom border-top">
+<nav class="menu-movil d-md-none text-white py-2 fixed-bottom ">
   <div class="container">
-    <div class="d-flex justify-content-between text-center">
+    <div class="d-flex justify-content-between text-center align-items-end">
 
       <!-- Zona -->
       <div class="menu-item">
-        <i class="bi bi-geo-alt-fill fs-3">
-        <div class="menu-label">Lara</div>
-            
-        </i>
+        <i class="bi bi-geo-alt-fill fs-1"></i>
+        <div class="menu-label m-0 p-0">Lara</div>
       </div>
 
       <!-- Categorías -->
       <div class="menu-item dropdown">
-        <i class="bi bi-grid-3x3-gap fs-3 " data-bs-toggle="dropdown">
-            <div class="menu-label">Mercado</div>
-        </i>
-        
+        <i class="bi bi-grid-3x3-gap fs-1" data-bs-toggle="dropdown"></i>
+        <div class="menu-label m-0 p-0">Mercado</div>
         <ul class="dropdown-menu dropdown-menu-end text-start" id="menu-categorias-movil">
           <!-- Se llena dinámicamente -->
         </ul>
       </div>
 
-      <!-- Login -->
-      <div class="menu-item">
-        <a href="login.html" class="text-white text-decoration-none" style="position: relative;">
-          <i class="bi bi-person " style="font-size: 50px;  position: absolute; top: -45px; left: -50px; border-radius: 50%; width: 100px; height: 100px; background-color: var(--accent); padding: 20px;"  >
-            <div class="menu-label m-0 p-0" >Iniciar</div>
-          </i>
+      <!-- Login (botón flotante) -->
+      <div class="menu-item login-button">
+        <a href="login.html" class="login-circle">
+          <i class="bi bi-person fs-2"></i>
         </a>
+        <div class="menu-label m-0 p-0">Iniciar sesión</div>
       </div>
 
       <!-- Moneda -->
       <div class="menu-item dropdown">
-        <i class="bi bi-currency-dollar fs-3 " data-bs-toggle="dropdown">
-        <div class="menu-label">Moneda</div>
-        </i>
+        <i class="bi bi-currency-dollar fs-1" data-bs-toggle="dropdown"></i>
+        <div class="menu-label m-0 p-0">Moneda</div>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="#" data-moneda="USD" style="color: black;">Dólar (USD)</a></li>
-          <li><a class="dropdown-item" href="#" data-moneda="VES" style="color: black;">Bolívares (VES)</a></li>
+          <li><a class="dropdown-item" href="#" data-moneda="USD">Dólar (USD)</a></li>
+          <li><a class="dropdown-item" href="#" data-moneda="VES">Bolívares (VES)</a></li>
         </ul>
       </div>
 
       <!-- Ver más -->
       <div class="menu-item dropdown">
-        <i class="bi bi-plus-circle fs-3" data-bs-toggle="dropdown">
-        <div class="menu-label">Ver más</div>
-
-        </i>
+        <i class="bi bi-plus-circle fs-1" data-bs-toggle="dropdown"></i>
+        <div class="menu-label m-0 p-0">Ver más</div>
         <ul class="dropdown-menu dropdown-menu-end text-start">
-          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Atención al Cliente</a></li>
-          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Zonas de Entrega</a></li>
-          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Más vendidos</a></li>
-          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Productos Recientes</a></li>
-          <li><a href="#" class="submenu-link dropdown-item" style="color: black;">Ofertas</a></li>
+          <li><a href="#" class="submenu-link dropdown-item">Atención al Cliente</a></li>
+          <li><a href="#" class="submenu-link dropdown-item">Zonas de Entrega</a></li>
+          <li><a href="#" class="submenu-link dropdown-item">Más vendidos</a></li>
+          <li><a href="#" class="submenu-link dropdown-item">Productos Recientes</a></li>
+          <li><a href="#" class="submenu-link dropdown-item">Ofertas</a></li>
         </ul>
       </div>
 
     </div>
   </div>
 </nav>
+
 
 
   <!-- Scripts -->
