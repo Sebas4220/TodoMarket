@@ -34,7 +34,7 @@
   padding: 8px 12px;
 }
 .btn-link {
-  color: var(--background);
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
 }
@@ -90,6 +90,22 @@ padding: 5px 20px 5px 20px;
 font-size: 12px;
 border-radius: 10px;
 
+}
+
+/* Sticky-top SOLO en móvil y tablet */
+@media (max-width: 991.98px) {
+  .navbar-principal {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+  }
+}
+
+/* En escritorio NO debe ser sticky */
+@media (min-width: 992px) {
+  .navbar-principal {
+    position: static;
+  }
 }
 
 
@@ -324,6 +340,21 @@ border-radius: 10px;
   border: none;
 
 }
+
+.btn-primary:hover{
+
+  background-color: var(--accent);
+  border: none;
+
+}
+
+.btn-primary:focus{
+
+  background-color: var(--accent);
+  border: none;
+
+}
+
 
 
 /* Acciones: agregar / cantidad / eliminar */
