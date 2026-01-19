@@ -40,7 +40,7 @@
 }
 
 .btn-link:hover{
-  color: var(--background);
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
 }
@@ -60,7 +60,7 @@
   padding: 0px 7px;
   font-size: 13px;
   top: 0px;
-  left: 16px;
+  left: 17px;
 
 }
 
@@ -236,18 +236,14 @@ border-radius: 10px;
   border: none;
   margin: 3px;
   border-radius: 10px;
-  box-shadow: 0 0px 15px rgba(0,0,0,0.12);
+  box-shadow: 0 0px 5px rgba(0,0,0,0.12);
   transition: transform .12s ease, box-shadow .12s ease;
   overflow: hidden;
   background: var(--background);
   
-  
 }
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 7px 5px rgba(0,0,0,0.12);
-}
+
 
 /* Imagen */
 .card .card-img-top {
