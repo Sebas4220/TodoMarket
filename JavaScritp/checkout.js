@@ -191,7 +191,7 @@
           renderItems();
           calcularTotales();
           btnFinalizar.disabled = false;
-          btnFinalizar.textContent = 'Pagar ahora';
+          btnFinalizar.textContent = 'Validar Pago';
 
           // Redirigir o mostrar confirmación
           window.location.href = 'index.html';

@@ -24,13 +24,15 @@ window.agregarAlCarrito = function (index) {
 
 /* -------------------------
    Actualizar botones de producto
-   (grid, slider, ofertas)
+   (grid, slider, ofertas, mas vendidos, recientes)
    ------------------------- */
 window.actualizarBotonProducto = function (index) {
   const ids = [
     `acciones-${index}`,
     `acciones-${index}-slider`,
-    `acciones-${index}-oferta`
+    `acciones-${index}-oferta`,
+    `acciones-${index}-masvendidos`,
+    `acciones-${index}-recientes`   // ← NUEVO: soporte para Productos Recientes
   ];
 
   const prod = PRODUCTOS[index];
@@ -84,7 +86,8 @@ window.decrementar = function (index) {
   if (item.cantidad > 1) {
     item.cantidad--;
   } else {
-    item.cantidad = 1;
+    eliminarProducto(index);
+    return;
   }
 
   saveState();
@@ -137,7 +140,7 @@ window.actualizarCarrito = function () {
       p.nombre
     )}" style="width:64px; height:64px; object-fit:cover; border-radius:6px; box-shadow:0 4px 10px rgba(0,0,0,0.06);">
           <div style="min-width:0;">
-            <div class="fw-bold" style="font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            <div class="fw-bold" style="font-size:14px; width: 100px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
               ${escapeHtml(p.nombre)}
             </div>
             <small class="text-muted">

@@ -24,11 +24,18 @@ window.slugify = function (text) {
 };
 
 /* -------------------------
-   Abrir vista de categoría
+   Abrir vistas especiales
    ------------------------- */
 window.abrirCategoria = function (categoria) {
-  const cat = decodeURIComponent(categoria);
-  window.location.href = `category.html?cat=${encodeURIComponent(cat)}`;
+  window.location.href = `category.html?cat=${encodeURIComponent(categoria)}`;
+};
+
+window.abrirMasVendidos = function () {
+  window.location.href = "category.html?cat=MasVendidos";
+};
+
+window.abrirRecientes = function () {
+  window.location.href = "category.html?cat=Recientes";
 };
 
 /* -------------------------
@@ -41,16 +48,15 @@ window.renderGrid = function (lista) {
   cont.innerHTML = "";
 
   if (!lista || !lista.length) {
-    cont.innerHTML =
-      `<div class="col-12"><p class="text-muted">No se encontraron productos.</p></div>`;
+    cont.innerHTML = `<div class="col-12"><p class="text-muted">No se encontraron productos.</p></div>`;
     return;
   }
 
   lista.forEach(p => {
     const index = PRODUCTOS.indexOf(p);
-    const precioBase = p.oferta !== "" && p.oferta !== null ? p.oferta : p.precio;
+    const precioBase = p.oferta ? p.oferta : p.precio;
     const precioActual = convertPrice(precioBase);
-    const precioAntiguo = p.oferta && p.oferta !== "" ? convertPrice(p.precio) : "";
+    const precioAntiguo = p.oferta ? convertPrice(p.precio) : "";
     const img = fallbackImagen(p.imagen);
 
     cont.innerHTML += `
@@ -58,23 +64,31 @@ window.renderGrid = function (lista) {
         <div class="card h-100">
           <img src="${escapeHtml(img)}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
           <div class="card-body">
+
             <div class="d-flex justify-content-between align-items-start mb-1">
-              ${p.oferta && p.oferta !== "" ? `<div class="badge-offer">Oferta</div>` : `<div></div>`}
+              ${p.oferta ? `<div class="badge-offer">Oferta</div>` : `<div></div>`}
             </div>
+
             <h6 class="card-title">${escapeHtml(p.nombre)}</h6>
+
             <div class="product-rating">
               <div class="stars">★★★★★</div>
-              <div class="text-muted">(${p.reviews || Math.floor(Math.random() * 200 + 1)})</div>
+              <div class="text-muted">(${p.reviews || Math.floor(Math.random()*200+1)})</div>
             </div>
+
             <div class="price-row">
               <div class="price-current">${precioActual}</div>
               ${precioAntiguo ? `<div class="price-old">${precioAntiguo}</div>` : ""}
             </div>
+
             <div class="product-meta">Tiempo de entrega • 90 minutos</div>
-            
+
             <div class="acciones-producto" id="acciones-${index}">
-              <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">Agregar al carrito</button>
+              <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">
+                Agregar al carrito
+              </button>
             </div>
+
           </div>
         </div>
       </div>
@@ -95,33 +109,41 @@ window.renderSliderCategoria = function (idContenedor, categoria) {
   const lista = PRODUCTOS.filter(p => p.categoria === categoria);
 
   lista.forEach(p => {
-    const globalIndex = PRODUCTOS.indexOf(p);
-    const precioBase = p.oferta !== "" && p.oferta !== null ? p.oferta : p.precio;
+    const index = PRODUCTOS.indexOf(p);
+    const precioBase = p.oferta ? p.oferta : p.precio;
     const precioActual = convertPrice(precioBase);
-    const precioAntiguo = p.oferta && p.oferta !== "" ? convertPrice(p.precio) : "";
+    const precioAntiguo = p.oferta ? convertPrice(p.precio) : "";
     const img = fallbackImagen(p.imagen);
 
     cont.innerHTML += `
       <div class="card h-100 card-slider">
         <img src="${escapeHtml(img)}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
         <div class="card-body">
+
           <div class="d-flex justify-content-between align-items-start mb-1">
-            ${p.oferta && p.oferta !== "" ? `<div class="badge-offer">Oferta</div>` : `<div></div>`}
+            ${p.oferta ? `<div class="badge-offer">Oferta</div>` : `<div></div>`}
           </div>
+
           <h6 class="card-title">${escapeHtml(p.nombre)}</h6>
+
           <div class="product-rating">
             <div class="stars">★★★★★</div>
-            <div class="text-muted">(${p.reviews || Math.floor(Math.random() * 200 + 1)})</div>
+            <div class="text-muted">(${p.reviews || Math.floor(Math.random()*200+1)})</div>
           </div>
+
           <div class="price-row">
             <div class="price-current">${precioActual}</div>
             ${precioAntiguo ? `<div class="price-old">${precioAntiguo}</div>` : ""}
           </div>
+
           <div class="product-meta">Tiempo de entrega • 90 minutos</div>
-          
-          <div class="acciones-producto" id="acciones-${globalIndex}-slider">
-            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${globalIndex})">Agregar al carrito</button>
+
+          <div class="acciones-producto" id="acciones-${index}-slider">
+            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">
+              Agregar al carrito
+            </button>
           </div>
+
         </div>
       </div>
     `;
@@ -131,17 +153,17 @@ window.renderSliderCategoria = function (idContenedor, categoria) {
 };
 
 /* -------------------------
-   Slider de ofertas
+   Slider de Ofertas
    ------------------------- */
 window.renderSliderOfertas = function () {
   const cont = document.getElementById("slider-ofertas");
   if (!cont) return;
 
   cont.innerHTML = "";
-  const lista = PRODUCTOS.filter(p => p.oferta !== "" && p.oferta !== null);
+  const lista = PRODUCTOS.filter(p => p.oferta);
 
   lista.forEach(p => {
-    const globalIndex = PRODUCTOS.indexOf(p);
+    const index = PRODUCTOS.indexOf(p);
     const precio = convertPrice(p.oferta);
     const precioAntiguo = convertPrice(p.precio);
     const img = fallbackImagen(p.imagen);
@@ -150,23 +172,138 @@ window.renderSliderOfertas = function () {
       <div class="card h-100 card-slider">
         <img src="${escapeHtml(img)}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
         <div class="card-body">
+
           <div class="d-flex justify-content-between align-items-start mb-1">
             <div class="badge-offer">Oferta</div>
           </div>
+
           <h6 class="card-title">${escapeHtml(p.nombre)}</h6>
+
           <div class="product-rating">
             <div class="stars">★★★★★</div>
-            <div class="text-muted">(${p.reviews || Math.floor(Math.random() * 200 + 1)})</div>
+            <div class="text-muted">(${p.reviews || Math.floor(Math.random()*200+1)})</div>
           </div>
+
           <div class="price-row">
             <div class="price-current">${precio}</div>
             <div class="price-old">${precioAntiguo}</div>
           </div>
+
           <div class="product-meta">Tiempo de entrega • 90 minutos</div>
-          
-          <div class="acciones-producto" id="acciones-${globalIndex}-oferta">
-            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${globalIndex})">Agregar al carrito</button>
+
+          <div class="acciones-producto" id="acciones-${index}-oferta">
+            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">
+              Agregar al carrito
+            </button>
           </div>
+
+        </div>
+      </div>
+    `;
+  });
+
+  PRODUCTOS.forEach((_, i) => actualizarBotonProducto(i));
+};
+
+/* -------------------------
+   Slider de Más Vendidos
+   ------------------------- */
+window.renderSliderMasVendidos = function () {
+  const cont = document.getElementById("slider-mas-vendidos");
+  if (!cont) return;
+
+  cont.innerHTML = "";
+
+  const lista = PRODUCTOS.slice(0, 12);
+
+  lista.forEach(p => {
+    const index = PRODUCTOS.indexOf(p);
+    const precioBase = p.oferta ? p.oferta : p.precio;
+    const precioActual = convertPrice(precioBase);
+    const precioAntiguo = p.oferta ? convertPrice(p.precio) : "";
+    const img = fallbackImagen(p.imagen);
+
+    cont.innerHTML += `
+      <div class="card h-100 card-slider">
+        <img src="${escapeHtml(img)}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
+        <div class="card-body">
+
+          ${p.oferta ? `<div class="badge-offer">Oferta</div>` : `<div></div>`}
+
+          <h6 class="card-title">${escapeHtml(p.nombre)}</h6>
+
+          <div class="product-rating">
+            <div class="stars">★★★★★</div>
+            <div class="text-muted">(${p.reviews || Math.floor(Math.random()*200+1)})</div>
+          </div>
+
+          <div class="price-row">
+            <div class="price-current">${precioActual}</div>
+            ${precioAntiguo ? `<div class="price-old">${precioAntiguo}</div>` : ""}
+          </div>
+
+          <div class="product-meta">Tiempo de entrega • 90 minutos</div>
+
+          <div class="acciones-producto" id="acciones-${index}-masvendidos">
+            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">
+              Agregar al carrito
+            </button>
+          </div>
+
+        </div>
+      </div>
+    `;
+  });
+
+  PRODUCTOS.forEach((_, i) => actualizarBotonProducto(i));
+};
+
+/* -------------------------
+   NUEVO: Slider de Productos Recientes
+   ------------------------- */
+window.renderSliderRecientes = function () {
+  const cont = document.getElementById("slider-recientes");
+  if (!cont) return;
+
+  cont.innerHTML = "";
+
+  // Últimos 12 productos agregados
+  const lista = PRODUCTOS.slice(-12).reverse();
+
+  lista.forEach(p => {
+    const index = PRODUCTOS.indexOf(p);
+    const precioBase = p.oferta ? p.oferta : p.precio;
+    const precioActual = convertPrice(precioBase);
+    const precioAntiguo = p.oferta ? convertPrice(p.precio) : "";
+    const img = fallbackImagen(p.imagen);
+
+    cont.innerHTML += `
+      <div class="card h-100 card-slider">
+        <img src="${escapeHtml(img)}" class="card-img-top" alt="${escapeHtml(p.nombre)}">
+        <div class="card-body">
+
+          ${p.oferta ? `<div class="badge-offer">Oferta</div>` : `<div></div>`}
+
+          <h6 class="card-title">${escapeHtml(p.nombre)}</h6>
+
+          <div class="product-rating">
+            <div class="stars">★★★★★</div>
+            <div class="text-muted">(${p.reviews || Math.floor(Math.random()*200+1)})</div>
+          </div>
+
+          <div class="price-row">
+            <div class="price-current">${precioActual}</div>
+            ${precioAntiguo ? `<div class="price-old">${precioAntiguo}</div>` : ""}
+          </div>
+
+          <div class="product-meta">Tiempo de entrega • 90 minutos</div>
+
+          <div class="acciones-producto" id="acciones-${index}-recientes">
+            <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">
+              Agregar al carrito
+            </button>
+          </div>
+
         </div>
       </div>
     `;
@@ -213,18 +350,34 @@ window.renderAll = function () {
     const titulo = document.getElementById("categoria-titulo");
 
     if (decodedCat === "Ofertas") {
-      let lista = PRODUCTOS.filter(p => p.oferta !== "" && p.oferta !== null);
+      let lista = PRODUCTOS.filter(p => p.oferta);
       lista = filtrarPorBusqueda(lista, q);
-      if (titulo) titulo.textContent = "Ofertas" + (q ? ` • "${q}"` : "");
-      renderGrid(lista);
-    } else {
-      let lista = PRODUCTOS.filter(p => p.categoria === decodedCat);
-      lista = filtrarPorBusqueda(lista, q);
-      if (titulo) titulo.textContent = decodedCat + (q ? ` • "${q}"` : "");
+      titulo.textContent = "Ofertas" + (q ? ` • "${q}"` : "");
       renderGrid(lista);
     }
 
-    return; // No renderizar sliders en category.html
+    else if (decodedCat === "MasVendidos") {
+      let lista = PRODUCTOS.slice(0, 50);
+      lista = filtrarPorBusqueda(lista, q);
+      titulo.textContent = "Más Vendidos" + (q ? ` • "${q}"` : "");
+      renderGrid(lista);
+    }
+
+    else if (decodedCat === "Recientes") {
+      let lista = PRODUCTOS.slice(-50).reverse();
+      lista = filtrarPorBusqueda(lista, q);
+      titulo.textContent = "Productos Recientes" + (q ? ` • "${q}"` : "");
+      renderGrid(lista);
+    }
+
+    else {
+      let lista = PRODUCTOS.filter(p => p.categoria === decodedCat);
+      lista = filtrarPorBusqueda(lista, q);
+      titulo.textContent = decodedCat + (q ? ` • "${q}"` : "");
+      renderGrid(lista);
+    }
+
+    return;
   }
 
   /* -------------------------
@@ -233,6 +386,16 @@ window.renderAll = function () {
   let lista = filtrarPorBusqueda(PRODUCTOS, q);
   renderGrid(lista);
 
+  /* SLIDER OFERTAS */
+  renderSliderOfertas();
+
+  /* SLIDER MÁS VENDIDOS */
+  renderSliderMasVendidos();
+
+  /* SLIDER RECIENTES */
+  renderSliderRecientes();
+
+  /* SLIDERS POR CATEGORÍA */
   const contSliders = document.getElementById("contenedor-sliders");
   if (contSliders) {
     contSliders.innerHTML = "";
@@ -262,10 +425,7 @@ window.renderAll = function () {
       `;
 
       contSliders.insertAdjacentHTML("beforeend", sectionHTML);
-
       renderSliderCategoria(`slider-${slug}`, cat);
     });
   }
-
-  renderSliderOfertas();
 };
