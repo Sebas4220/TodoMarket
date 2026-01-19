@@ -95,13 +95,13 @@
 
 
 
-  <div class="container py-4">
-    <div class="d-flex align-items-center justify-content-between mb-2">
+  <div class="container pb-5 px-2">
+    <div class="d-flex align-items-center justify-content-between my-2">
       <h3 id="categoria-titulo" class="m-0">Categoría</h3>
       <a href="index.html" class="btn btn-outline-secondary btn-sm">Volver</a>
     </div>
 
-    <div id="contenedor-productos" class="row g-3"></div>
+    <div id="contenedor-productos" class="row  g-0 gy-2"></div>
   </div>
 
   <!-- CARRITO POPUP -->
@@ -250,9 +250,9 @@
         <ul class="dropdown-menu dropdown-menu-end text-start">
           <li><a href="#" class="submenu-link dropdown-item">Atención al Cliente</a></li>
           <li><a href="#" class="submenu-link dropdown-item">Zonas de Entrega</a></li>
-          <li><a href="#" class="submenu-link dropdown-item">Más vendidos</a></li>
-          <li><a href="#" class="submenu-link dropdown-item">Productos Recientes</a></li>
-          <li><a href="#" class="submenu-link dropdown-item">Ofertas</a></li>
+          <li><a href="#" class="submenu-link dropdown-item" onclick="abrirCategoria('MasVendidos')">Más vendidos</a></li>
+          <li><a href="#" class="submenu-link dropdown-item" onclick="abrirRecientes()">Productos Recientes</a></li>
+          <li><a href="#" class="submenu-link dropdown-item" onclick="abrirCategoria('Ofertas')">Ofertas</a></li>
         </ul>
       </div>
 

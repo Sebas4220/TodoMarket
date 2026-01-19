@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Administrativo - TodoMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./estilos/panelAdministrativo.css    ">
+</head>
+<body>
+
+<div class="admin-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <h2>Admin</h2>
+
+    <button class="admin-link" data-section="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</button>
+    <button class="admin-link" data-section="nuevos-productos"><i class="bi bi-plus-circle"></i> Nuevos productos</button>
+    <button class="admin-link" data-section="editar-productos"><i class="bi bi-pencil-square"></i> Editar productos</button>
+    <button class="admin-link" data-section="crear-categoria"><i class="bi bi-tags"></i> Crear categoría</button>
+    <button class="admin-link" data-section="pedidos"><i class="bi bi-bag-check"></i> Pedidos</button>
+    <button class="admin-link" data-section="configuracion"><i class="bi bi-gear"></i> Configuración</button>
+  </aside>
+
+  <!-- CONTENIDO -->
+  <main class="admin-content">
+
+    <!-- HEADER SUPERIOR -->
+    <div class="admin-header">
+      <h1 id="admin-title">Dashboard</h1>
+
+      <div class="admin-user">
+        <span>Administrador</span>
+        <img src="https://i.pravatar.cc/150?img=12">
+      </div>
+    </div>
+
+    <!-- SECCIONES -->
+    <section id="section-dashboard" class="admin-section">
+      <div class="admin-cards">
+        <div class="admin-card"><h3>Productos</h3><p>Gestión completa del inventario.</p></div>
+        <div class="admin-card"><h3>Categorías</h3><p>Organiza el catálogo del mercado.</p></div>
+        <div class="admin-card"><h3>Pedidos</h3><p>Monitorea ventas y estados.</p></div>
+        <div class="admin-card"><h3>Usuarios</h3><p>Control de clientes y permisos.</p></div>
+      </div>
+    </section>
+
+<section id="section-nuevos-productos" class="admin-section" style="display:none;">
+  <div class="admin-form">
+
+    <h3 class="mb-4">Crear nuevo producto</h3>
+
+    <form>
+
+      <div class="row g-3">
+
+        <!-- Imágenes -->
+        <div class="col-12">
+          <label class="form-label fw-semibold">Imágenes del producto</label>
+          <input type="file" class="form-control" multiple>
+        </div>
+
+        <!-- Nombre -->
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Nombre de Producto</label>
+          <input type="text" class="form-control" placeholder="Ej: Televisor 55&quot; UHD">
+        </div>
+
+        <!-- Categoría -->
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Categoría</label>
+          <select class="form-select">
+            <option selected>Seleccionar...</option>
+            <option selected>Harina</option>
+            <option selected>Seleccionar...</option>
+          </select>
+        </div>
+
+        <!-- Precio Detal -->
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Precio Detal</label>
+          <input type="number" class="form-control" placeholder="Ej: 499.99">
+        </div>
+
+        <!-- Precio Oferta -->
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Precio Oferta</label>
+          <input type="number" class="form-control" placeholder="Ej: 399.99">
+        </div>
+
+        <!-- Calificación -->
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Calificación Estrellas</label>
+          <input type="number" class="form-control" placeholder="1 - 5">
+        </div>
+
+        <!-- Botón -->
+        <div class="col-12 mt-3">
+          <button type="submit" class="btn w-100" style="background: var(--accent); color: white; font-weight:600;">
+            Guardar producto
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+</section>
+
+<section id="section-editar-productos" class="admin-section" style="display:none;">
+
+  <!-- FORMULARIO DE BÚSQUEDA -->
+  <div class="admin-form mb-4">
+    <h3 class="mb-3">Buscar producto</h3>
+
+    <form>
+      <div class="row g-3 align-items-end">
+
+        <!-- Campo de búsqueda -->
+        <div class="col-md-8">
+          <label class="form-label fw-semibold">Nombre o ID</label>
+          <input type="text" class="form-control" placeholder="Ej: TV Samsung, ID #1234">
+        </div>
+
+        <!-- Botón -->
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-accent w-100 fw-semibold">
+            Buscar
+          </button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+  <!-- TABLA DE RESULTADOS -->
+  <div class="table-responsive">
+    <table class="admin-table table align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Imagen</th>
+          <th>Nombre de Producto</th>
+          <th>Categoría</th>
+          <th>$ Precio Detal </th>
+          <th>$ Precio Oferta</th>
+          <th>Calificación</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>#1234</td>
+          <td><img src="./img/icon.png" width="40px" alt=""></td>
+          <td>TV 55"</td>
+          <td>Electrónica</td>
+          <td>499</td>
+          <td>20</td>
+          <td>5</td>
+          <td class="text-center d-flex gap-2 justify-content-center">
+
+            <button class="btn btn-edit btn-sm px-3">
+              <i class="bi bi-pencil-square me-1"></i> Editar
+            </button>
+
+            <button class="btn btn-delete btn-sm px-3">
+              <i class="bi bi-trash me-1"></i> Eliminar
+            </button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
+
+
+    <section id="section-crear-categoria" class="admin-section" style="display:none;">
+      <div class="admin-form">
+        <h3>Nueva categoría</h3>
+        <label>Nombre</label><input type="text">
+        <label>Descripción</label><textarea rows="3"></textarea>
+        <label>Slug</label><input type="text">
+        <button>Guardar</button>
+      </div>
+    </section>
+
+    <section id="section-pedidos" class="admin-section" style="display:none;">
+      <div class="admin-form">
+        <h3>Filtrar pedidos</h3>
+        <select><option>Todos</option></select>
+        <input type="text" placeholder="Cliente o ID">
+        <button>Filtrar</button>
+      </div>
+
+      <table class="admin-table">
+        <thead><tr><th>ID</th><th>Cliente</th><th>Fecha</th><th>Total</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody><tr><td>#PED-001</td><td>Juan</td><td>17/01/26</td><td>$120</td><td>Pendiente</td><td><button class="btn-sm">Ver</button></td></tr></tbody>
+      </table>
+    </section>
+
+    <section id="section-configuracion" class="admin-section" style="display:none;">
+      <div class="admin-form">
+        <h3>Configuración general</h3>
+        <label>Nombre del marketplace</label><input type="text" value="TodoMarket">
+        <label>Correo de soporte</label><input type="email" value="soporte@todomarket.com">
+        <label>Moneda principal</label><select><option>USD</option><option>VES</option></select>
+        <button>Guardar</button>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script>
+  const links = document.querySelectorAll('.admin-link');
+  const sections = document.querySelectorAll('.admin-section');
+  const title = document.getElementById('admin-title');
+
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = link.dataset.section;
+
+      sections.forEach(sec => sec.style.display = 'none');
+      document.getElementById('section-' + target).style.display = 'block';
+
+      title.textContent = link.textContent.trim();
+    });
+  });
+</script>
+
+</body>
+</html>
