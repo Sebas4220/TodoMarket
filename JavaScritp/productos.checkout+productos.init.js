@@ -21,8 +21,8 @@ window.initCheckout = function () {
   const previewImg = document.getElementById("comprobante-img");
   const previewRemove = document.getElementById("comprobante-remove");
 
-  const DELIVERY_FEE_USD = 1.5;
-  const TAX_RATE = 0.00;
+  const DELIVERY_FEE_USD = 2.0;
+  const TAX_RATE = 0.16; // IVA 16%
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
   const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
@@ -55,7 +55,7 @@ window.initCheckout = function () {
     });
 
     const envio = DELIVERY_FEE_USD;
-    const tax = subtotal * TAX_RATE;
+    const tax = subtotal * TAX_RATE; // IVA 16%
     const total = subtotal + envio + tax;
 
     elSubtotal.textContent = convertPrice(subtotal);
@@ -141,7 +141,6 @@ window.initApp = function () {
 
 /* ============================================
    Listener global para cambio de moneda
-   Cambio inmediato sin recargar la página
    ============================================ */
 
 document.addEventListener("click", e => {
