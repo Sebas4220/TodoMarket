@@ -46,21 +46,19 @@ window.actualizarBotonProducto = function (index) {
       cont.innerHTML = `
         <button class="btn btn-primary btn-sm" onclick="agregarAlCarrito(${index})">
           Agregar al carrito
-        </button>
-      `;
+        </button>`;
       return;
     }
 
     cont.innerHTML = `
       <div class="d-flex justify-content-center align-items-center gap-2">
         <button class="btn btn-outline-secondary btn-sm" onclick="decrementar(${index})">-</button>
-        <span class="fw-bold" id="cantidad-${index}">${item.cantidad}</span>
+        <span class="fw-bold">${item.cantidad}</span>
         <button class="btn btn-outline-secondary btn-sm" onclick="incrementar(${index})">+</button>
         <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${index})">
           <i class="bi bi-trash3-fill"></i>
         </button>
-      </div>
-    `;
+      </div>`;
   });
 };
 
@@ -145,17 +143,15 @@ window.actualizarCarrito = function () {
   let totalUnidades = 0;
 
   STATE.carrito.forEach(p => {
-    const precioUnit =
-      p.oferta !== "" && p.oferta !== null ? Number(p.oferta) : Number(p.precio);
+    const precioUnit = p.oferta ? Number(p.oferta) : Number(p.precio);
     const subtotal = precioUnit * p.cantidad;
     total += subtotal;
     totalUnidades += p.cantidad;
 
-    const globalIndex = PRODUCTOS.findIndex(
-      prod =>
-        prod.nombre === p.nombre &&
-        prod.categoria === p.categoria &&
-        Number(prod.precio) === Number(p.precio)
+    const globalIndex = PRODUCTOS.findIndex(prod =>
+      prod.nombre === p.nombre &&
+      prod.categoria === p.categoria &&
+      Number(prod.precio) === Number(p.precio)
     );
 
     const img = fallbackImagen(p.imagen);
@@ -163,15 +159,14 @@ window.actualizarCarrito = function () {
     cont.innerHTML += `
       <div class="d-flex justify-content-between align-items-center mb-2">
         <div class="d-flex align-items-center" style="gap:10px; max-width:60%;">
-          <img src="${escapeHtml(img)}" alt="${escapeHtml(
-      p.nombre
-    )}" style="width:64px; height:64px; object-fit:cover; border-radius:6px; box-shadow:0 4px 10px rgba(0,0,0,0.06);">
+          <img src="${escapeHtml(img)}" alt="${escapeHtml(p.nombre)}"
+               style="width:64px; height:64px; object-fit:cover; border-radius:6px;">
           <div style="min-width:0;">
-            <div class="fw-bold" style="font-size:14px; width: 100px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            <div class="fw-bold" style="font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
               ${escapeHtml(p.nombre)}
             </div>
             <small class="text-muted">
-              x${p.cantidad} • ${convertPrice(precioUnit)} c/u
+              x${p.cantidad} • ${convertPrice(precioUnit)}
             </small>
           </div>
         </div>
@@ -187,8 +182,7 @@ window.actualizarCarrito = function () {
             </button>
           </div>
         </div>
-      </div>
-    `;
+      </div>`;
   });
 
   totalSpan.textContent = convertPrice(total);
@@ -203,11 +197,9 @@ window.actualizarCarrito = function () {
 window.toggleCarrito = function () {
   const popup = document.getElementById("carrito-popup");
   if (!popup) return;
+
   popup.classList.toggle("active");
-  popup.setAttribute(
-    "aria-hidden",
-    !popup.classList.contains("active")
-  );
+  popup.setAttribute("aria-hidden", !popup.classList.contains("active"));
 };
 
 /* -------------------------

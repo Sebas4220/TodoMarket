@@ -115,7 +115,7 @@ window.initCheckout = function () {
   }
 
   /* -------------------------
-     Finalizar pago
+     Finalizar pago + Guardar historial
      ------------------------- */
   if (btnFinalizar) {
     btnFinalizar.addEventListener("click", () => {
@@ -136,16 +136,49 @@ window.initCheckout = function () {
         return;
       }
 
+      // CALCULAR TOTALES CONGELADOS
+      let subtotal = 0;
+      const items = STATE.carrito.map(p => {
+        const precioUnit = p.oferta || p.precio;
+        const subtotalItem = precioUnit * p.cantidad;
+        subtotal += subtotalItem;
+
+        return {
+          nombre: p.nombre,
+          categoria: p.categoria,
+          imagen: p.imagen,
+          cantidad: p.cantidad,
+          precioUnitario: precioUnit,
+          subtotal: subtotalItem
+        };
+      });
+
+      const envio = DELIVERY_FEE_USD;
+      const tax = subtotal * TAX_RATE;
+      const total = subtotal + envio + tax;
+
+      // GUARDAR EN HISTORIAL
+      guardarHistorialCompra({
+        id: Date.now(),
+        fecha: new Date().toISOString(),
+        moneda: STATE.moneda,
+        items,
+        subtotal,
+        envio,
+        tax,
+        total
+      });
+
+      // VACIAR CARRITO
+      STATE.carrito = [];
+      saveState();
+
       btnFinalizar.disabled = true;
       btnFinalizar.textContent = "Procesando...";
 
       setTimeout(() => {
         alert("Pago verificado correctamente. Gracias por tu compra.");
-
-        STATE.carrito = [];
-        saveState();
-
-        window.location.href = "index.html";
+        window.location.href = "historial.html";
       }, 1200);
     });
   }
@@ -155,11 +188,9 @@ window.initCheckout = function () {
 
 /* ============================================
    productos.init.js
-   Inicialización global del sitio
    ============================================ */
 
 window.initApp = function () {
-
   if (window.renderAll) renderAll();
   if (window.initSearch) initSearch();
   if (window.actualizarCarrito) actualizarCarrito();
