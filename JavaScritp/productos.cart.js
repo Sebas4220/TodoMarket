@@ -1,6 +1,6 @@
 /* ============================================
    productos.cart.js
-   Carrito: lógica + UI + badge
+   Carrito: lógica + UI + badge + historial
    ============================================ */
 
 /* -------------------------
@@ -32,7 +32,7 @@ window.actualizarBotonProducto = function (index) {
     `acciones-${index}-slider`,
     `acciones-${index}-oferta`,
     `acciones-${index}-masvendidos`,
-    `acciones-${index}-recientes`   // ← NUEVO: soporte para Productos Recientes
+    `acciones-${index}-recientes`
   ];
 
   const prod = PRODUCTOS[index];
@@ -101,6 +101,33 @@ window.eliminarProducto = function (index) {
   saveState();
   actualizarCarrito();
   actualizarBotonProducto(index);
+};
+
+/* -------------------------
+   Guardar compra en historial
+   ------------------------- */
+window.guardarHistorialCompra = function (detalle) {
+  STATE.historial = STATE.historial || [];
+
+  STATE.historial.push({
+    id: Date.now(),
+    fecha: new Date().toISOString(),
+    moneda: STATE.moneda,
+    envio: detalle.envio,
+    tax: detalle.tax,
+    subtotal: detalle.subtotal,
+    total: detalle.total,
+    items: detalle.items.map(i => ({
+      nombre: i.nombre,
+      categoria: i.categoria,
+      imagen: i.imagen,
+      cantidad: i.cantidad,
+      precioUnitario: i.precioUnitario,
+      subtotal: i.subtotal
+    }))
+  });
+
+  saveState();
 };
 
 /* -------------------------

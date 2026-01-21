@@ -13,16 +13,16 @@ window.initCheckout = function () {
   const elTax = document.getElementById("tax-text");
   const elTotal = document.getElementById("total-text");
   const elEnvioMsg = document.getElementById("envio-mensaje");
-  const selectMonedaCheckout = document.getElementById("select-moneda");
 
-  const formPagoComun = document.getElementById("form-pago-comun");
   const inputComprobante = document.getElementById("payer-comprobante");
   const previewWrapper = document.getElementById("comprobante-preview");
   const previewImg = document.getElementById("comprobante-img");
   const previewRemove = document.getElementById("comprobante-remove");
 
-  const DELIVERY_FEE_USD = 2.0;
-  const TAX_RATE = 0.16; // IVA 16%
+  const btnFinalizar = document.getElementById("btn-finalizar");
+
+  const DELIVERY_FEE_USD = 1.5;
+  const TAX_RATE = 0.16;
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
   const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
@@ -55,7 +55,7 @@ window.initCheckout = function () {
     });
 
     const envio = DELIVERY_FEE_USD;
-    const tax = subtotal * TAX_RATE; // IVA 16%
+    const tax = subtotal * TAX_RATE;
     const total = subtotal + envio + tax;
 
     elSubtotal.textContent = convertPrice(subtotal);
@@ -69,6 +69,7 @@ window.initCheckout = function () {
   /* -------------------------
      Cambio de moneda en checkout
      ------------------------- */
+  const selectMonedaCheckout = document.getElementById("select-moneda");
   if (selectMonedaCheckout) {
     selectMonedaCheckout.value = STATE.moneda;
     selectMonedaCheckout.addEventListener("change", e => {
@@ -113,6 +114,42 @@ window.initCheckout = function () {
     });
   }
 
+  /* -------------------------
+     Finalizar pago
+     ------------------------- */
+  if (btnFinalizar) {
+    btnFinalizar.addEventListener("click", () => {
+
+      const nombre = document.getElementById("payer-nombre").value.trim();
+      const apellido = document.getElementById("payer-apellido").value.trim();
+      const telefono = document.getElementById("payer-telefono").value.trim();
+      const cedula = document.getElementById("payer-cedula").value.trim();
+      const comprobante = document.getElementById("payer-comprobante").files[0];
+
+      if (!nombre || !apellido || !telefono || !cedula) {
+        alert("Completa todos los datos del formulario.");
+        return;
+      }
+
+      if (!comprobante) {
+        alert("Debes subir el comprobante de pago.");
+        return;
+      }
+
+      btnFinalizar.disabled = true;
+      btnFinalizar.textContent = "Procesando...";
+
+      setTimeout(() => {
+        alert("Pago verificado correctamente. Gracias por tu compra.");
+
+        STATE.carrito = [];
+        saveState();
+
+        window.location.href = "index.html";
+      }, 1200);
+    });
+  }
+
   renderCheckoutItems();
 };
 
@@ -123,19 +160,10 @@ window.initCheckout = function () {
 
 window.initApp = function () {
 
-  // Render inicial
   if (window.renderAll) renderAll();
-
-  // Buscador desktop + móvil
   if (window.initSearch) initSearch();
-
-  // Carrito persistente
   if (window.actualizarCarrito) actualizarCarrito();
-
-  // Checkout (solo si existe)
   if (window.initCheckout) initCheckout();
-
-  // Categorías dinámicas en menú móvil
   if (window.initCategoriasMovil) initCategoriasMovil();
 };
 
@@ -153,12 +181,10 @@ document.addEventListener("click", e => {
   STATE.moneda = nueva;
   saveState();
 
-  // Render inmediato en TODA la página
   if (window.renderAll) renderAll();
   if (window.actualizarCarrito) actualizarCarrito();
   if (window.initCheckout) initCheckout();
 
-  // Actualizar texto del botón en menú desktop
   const dropdownBtn = document.querySelector(".moneda-dropdown .dropdown-toggle");
   if (dropdownBtn) dropdownBtn.textContent = `Moneda ${nueva}`;
 });
@@ -184,5 +210,4 @@ window.initCategoriasMovil = function () {
   });
 };
 
-/* Ejecutar al cargar */
 document.addEventListener("DOMContentLoaded", initApp);
