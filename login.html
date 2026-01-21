@@ -24,7 +24,7 @@
 </head>
 <body>
 <header class="navbar-principal">
-  <div class="container py-2 p-0">
+  <div class="container py-2 p-0 px-2">
 
     <div class="d-flex align-items-center justify-content-between">
 
@@ -95,9 +95,9 @@
       <a href="#" class="submenu-link">Categorias de Mercado</a>
       <a href="#" class="submenu-link">Atención al Cliente</a>
       <a href="#" class="submenu-link">Zonas de Entrega</a>
-      <a href="#" class="submenu-link">Más vendidos</a>
-      <a href="#" class="submenu-link">Productos Recientes</a>
-      <a href="#" class="submenu-link">Ofertas</a>
+      <a href="#" class="submenu-link" onclick="abrirCategoria('MasVendidos')">Más vendidos</a>
+      <a href="#" class="submenu-link" onclick="abrirRecientes()">Productos Recientes</a>
+      <a href="#" class="submenu-link" onclick="abrirCategoria('Ofertas')">Ofertas</a>
     </div>
   </nav>
 </header>
@@ -250,9 +250,8 @@
   </button>
 </footer>
 
-
-<nav class="menu-movil d-md-none text-white py-2 fixed-bottom ">
-  <div class="container">
+<nav class="menu-movil d-md-none text-white py-2 fixed-bottom px-2">
+  <div class="container p-0">
     <div class="d-flex justify-content-between text-center align-items-end">
 
       <!-- Zona -->
@@ -270,7 +269,7 @@
         </ul>
       </div>
 
-      <!-- Login (botón flotante) -->
+      <!-- Login -->
       <div class="menu-item login-button">
         <a href="login.html" class="login-circle">
           <i class="bi bi-person fs-2"></i>
@@ -293,17 +292,23 @@
         <i class="bi bi-plus-circle fs-1" data-bs-toggle="dropdown"></i>
         <div class="menu-label m-0 p-0">Ver más</div>
         <ul class="dropdown-menu dropdown-menu-end text-start">
+
           <li><a href="#" class="submenu-link dropdown-item">Atención al Cliente</a></li>
           <li><a href="#" class="submenu-link dropdown-item">Zonas de Entrega</a></li>
-          <li><a href="#" class="submenu-link dropdown-item">Más vendidos</a></li>
-          <li><a href="#" class="submenu-link dropdown-item">Productos Recientes</a></li>
-          <li><a href="#" class="submenu-link dropdown-item">Ofertas</a></li>
+
+          <!-- Igual que el menú desktop -->
+          <li><a href="#" class="submenu-link dropdown-item" onclick="abrirMasVendidos()">Más vendidos</a></li>
+          <li><a href="#" class="submenu-link dropdown-item" onclick="abrirRecientes()">Productos Recientes</a></li>
+          <li><a href="#" class="submenu-link dropdown-item" onclick="abrirCategoria('Ofertas')">Ofertas</a></li>
+
         </ul>
       </div>
 
     </div>
   </div>
 </nav>
+
+
 
 
    <!-- Scripts -->
